@@ -25,22 +25,25 @@ public class Carro {
         return carroLigado;
     }
 
-    public void acelerarCarro(){
-        if (carroLigado) {
-            if(permissaoMovimentarMarcha()){
-                if (pedals.getVelocidade() >= maxVelocidade) {
-                    System.out.println("Carro não pode mais ser acelerado");
-                }else{
-                    pedals.acelerar();
-                }
-            }else{
-                System.out.println("Precisa ajustar a marcha do carro para poder movimentar o carro");
-            }
-        }else{
-            System.out.println("O carro precisa ser ligado para poder acelerar");
-            
+    public void acelerarCarro() throws MarchaIncorretaExeption {
+        if (!carroLigado) {
+            System.out.println("\nO carro precisa estar ligado para poder acelerar!");
+            return;
         }
+    
+        int novaVelocidade = pedals.getVelocidade() + 1;
+        if (novaVelocidade > maxVelocidade) {
+            System.out.println("Carro não pode mais ser acelerado!");
+            return;
+        }
+        if (!validarMarcha(novaVelocidade)) { 
+            throw new MarchaIncorretaExeption("Marcha incorreta! Ajuste a marcha antes de acelerar.");
+        }
+    
+        pedals.acelerar();
+        System.out.println("Velocidade atual: " + pedals.getVelocidade() + " km/h");
     }
+    
 
     public void frearCarro(){
         if (carroLigado) {
@@ -62,14 +65,24 @@ public class Carro {
         volante.esquerda();
     }
 
-    private boolean permissaoMovimentarMarcha(){
-        if (pedals.getVelocidade() == 0) {
-            
+    private boolean validarMarcha(int novaVelocidade) {
+        switch (marcha.getMarchaAtual()) {
+            case 1: return novaVelocidade >= 0 && novaVelocidade <= 20;
+            case 2: return novaVelocidade > 20 && novaVelocidade <= 40;
+            case 3: return novaVelocidade > 40 && novaVelocidade <= 60;
+            case 4: return novaVelocidade > 60 && novaVelocidade <= 80;
+            case 5: return novaVelocidade > 80 && novaVelocidade <= 100;
+            case 6: return novaVelocidade > 100 && novaVelocidade <= 120;
+            default: return false;
         }
-        return true;
     }
+
+    
     public void subirMarchaCarro(){
-        
+        marcha.aumentar();
+    }
+    public void diminuirMarchaCarro(){
+        marcha.diminuir();
     }
     
 }

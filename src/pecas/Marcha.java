@@ -13,8 +13,8 @@ public class Marcha {
             System.out.println("já está na maior macha possivel");
         }
         else{
-            System.out.println("Aumentando marcha");
-            aumentar.aumentar(marchaAtual);
+            marchaAtual = aumentar.aumentar(marchaAtual);
+            System.out.println("Aumentando marcha para "+marchaAtual);
         }
     }
 
@@ -23,8 +23,8 @@ public class Marcha {
             System.out.println("já está na menor macha possivel");
         }
         else{
-            System.out.println("Diminuindo marcha");
-            diminuir.diminuir(marchaAtual);
+            marchaAtual = diminuir.diminuir(marchaAtual);
+            System.out.println("Diminuindo marcha para "+marchaAtual);
         }
     }
 
