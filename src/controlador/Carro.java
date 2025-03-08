@@ -59,10 +59,18 @@ public class Carro {
     }
 
     public void virarCarroDireita(){
-        volante.direita();
+        if (pedals.getVelocidade() >= 40) {
+            volante.direita();
+        }else{
+            System.out.println("A velocidade precisa chegar em 40km/h para virar o carro");
+        }
     }
     public void virarCarroEsquerda(){
-        volante.esquerda();
+        if (pedals.getVelocidade() >= 40) {
+            volante.esquerda();
+        }else{
+            System.out.println("A velocidade precisa chegar em 40km/h para virar o carro");
+        }
     }
 
     private boolean validarMarcha(int novaVelocidade) {
